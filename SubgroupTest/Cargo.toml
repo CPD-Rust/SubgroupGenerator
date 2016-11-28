@@ -1,0 +1,6 @@
+[package]
+name = "SubgroupTest"
+version = "0.1.0"
+authors = ["r.a.schoonhoven@hotmail.com <r.a.schoonhoven@students.uu.nl>"]
+
+[dependencies]
