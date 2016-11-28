@@ -7,7 +7,6 @@ struct PermElement {
     max_n: u32,
 
     // The length of the vector, i.e. is it a transposition or a triple etc.
-    // TODO Niet relevant? Ze hebben altijd lengte n toch?
     size: usize,
 
     // We represent the actual permutation as a vector.
@@ -39,23 +38,37 @@ impl Ispermelement for PermElement {
     }
 }
 
-//TODO Hier & gebruiken? Stel dat we een action met map op een PermElement gooien.
-fn action(perm: PermElement, int: u32) -> u32 {
-    if int < 1 || int > perm.max_n {
+// We gebruiken newtype
+struct Perm(PermElement);
+
+fn action(perm: &PermElement, int: &u32) -> u32 {
+    if (int < &1 || int > &perm.max_n) {
         panic!("The group action is not defined for this number!");
     }
     else {
-        perm.permutation[(int-1) as usize]
+        let returnval = perm.permutation[(int-1) as usize].clone();
+        returnval
     }
+}
+
+fn composition(perm1: &PermElement, perm2: &PermElement) -> PermElement {
+    let resultvec: Vec<_> = perm1.permutation.iter().map(|&x| action(&perm2, &x)).collect();
+    let returnperm = PermElement { max_n: perm2.max_n, size: perm2.size, permutation: resultvec };
+    returnperm
 }
 
 fn main() {
     let testperm = PermElement { max_n: 3, size: 3, permutation: vec![2, 1, 3] };
+    let Perm(newtypetest) = Perm(PermElement { max_n: 3, size: 3, permutation: vec![3, 1, 2] });
     testperm.check();
 
     //Doe even S3 voor nu.
-    let identity = PermElement { max_n:3, size: 3, permutation: vec![1, 2, 3] };
+    let identity = PermElement { max_n: 3, size: 3, permutation: vec![1, 2, 3] };
 
-    println!("{}", action(identity, 2));
-    println!("{}", action(testperm, 2));
+    println!("{}", action(&identity, &2));
+    println!("{}", action(&testperm, &2));
+    println!("{}", action(&newtypetest, &2));
+    println!("{:?}", composition(&testperm, &newtypetest).permutation);
+    println!("{:?}", composition(&testperm, &identity).permutation);
+    println!("{:?}", composition(&identity, &newtypetest).permutation);
 }
