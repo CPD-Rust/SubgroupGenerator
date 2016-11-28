@@ -7,6 +7,7 @@ struct PermElement {
     max_n: u32,
 
     // The length of the vector, i.e. is it a transposition or a triple etc.
+    // TODO Niet relevant? Ze hebben altijd lengte n toch?
     size: usize,
 
     // We represent the actual permutation as a vector.
