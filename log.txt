@@ -1,0 +1,18 @@
+### Log for SubgroupGenerator
+
+Error 1:
+We want to construct a struc for elements of S_n. We define PermElement with 3 attributes; 
+max_n: u32,
+size: usize,
+permutation: [u32, size],
+
+This gives an error since the size of an array needs to be known at compile time. We fixed this by choosing the vector type: permutation: Vec<u32>,
+
+Error 2:
+We defined a trait "IsPermElement" for PermElement which checks that we have a valid permutation. When we defined this trait for PermElement we had an error. We tried to loop over the integers inside the permutation and see if they are inside the interval [1,n]. However, the function is defined over &self so if we do "for x in &self.permutation" and then do "x >= 1" we are comparing a reference to an int with an actual int. This is not possible so we get an error.
+
+Error 3:
+?? Waarom kan x <= &self.max_n wel??
+
+Error 4:
+We defined the action of a permutation on an int as a function on &PermElement and u32. This transforms an int to whatever int the permutation wants to send it to. However, for the composition of two permutations we mapped this action function over the vector representing the permutation. This means that the second permutation of the composition passed ownership to the function. Later, when we tried to use the permutation again we got an error. We solved it by making action work on &u32 instead.
