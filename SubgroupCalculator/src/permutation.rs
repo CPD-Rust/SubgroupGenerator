@@ -1,3 +1,5 @@
+use std::fmt;
+
 // We would like to add an extra type parameter, making the size part of the type.
 // TODO: check if this is possible
 // In order to enforce that we get an actual permutation, we want to wrap the vector
@@ -5,6 +7,12 @@
 pub struct Permutation {
     // We represent the permutation as a mapping from int to int
     permutation: Vec<usize>,
+}
+
+impl Display for Permutation {
+    fn fmt(&self, f: &fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.permutation)
+    }
 }
 
 pub fn make_permutation(mapping : Vec<usize>) -> Option<Permutation> {
