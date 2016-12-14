@@ -1,0 +1,71 @@
+\documentclass{article}
+
+\usepackage{xltxtra}
+\usepackage{minted}
+
+\begin{document}
+
+\section{Type parameters} \label{sec:type_parameters}
+
+We wanted to define a data type to store permutations on some finite set $\{1, \dots, n\}$, by using an array of constant length. Since permutations on different sets may be incompatible (for example they can't be composed), we want to store the variable $n$ in the type of the permutations. However, Rust has no dependent types yet, and instead we have to check during construction.
+
+Therefore, we use a newtype wrapper \texttt{Permutation} and provide constructors from \texttt{Vec<T>} which check the given mapping is actually a permutation of the right number of elements. % FIXME: check of je pub structs kan constructen in andere modules als ze privévelden hebben
+% Zie commit 6342daecd4ca21cad922e34c9db61286b19c78f4
+% Zie commit c1eba981bfbd6613a74d312631eec4d5cdac50c8
+
+\section{Module struggles}
+
+% Tim vindt dit te veel detail, Richard wil wel dat het blijft staan.
+Rust has a concept of modules that does not match the concepts in some other programming languages. When we wanted to place some code in another file \texttt{permutation.rs}, we needed some way to reference this from the main file. From our experience with other programming languages, the obvious way to do this is by writing \texttt{use permutation}, as we would also write \texttt{use std::fmt}. However, Rust requires all modules to be declared as a module, so the main file actually has to contain \texttt{mod permutation}.
+% Zie commit 7861634fd70734f5b38249c8c6d90bed108f6e75
+% Zie commit 4338c06e1112c4508edffa68e06cb57957c66a32
+% Zie commit 240f8fa68fd5891880ef9de01679d8c1e872371a
+% Zie commit 3dbd5fc5fd37ae72196d207bee0d7bb5be44ed81
+Moreover, having to decide which declarations to export led to a lot of extra building steps.
+% Zie commit 67d070fa201379b6f705b3137aefa63e624d8af2
+% Zie commit 06ea924a9f5b320dbe30f727fc40a70fd73848c1
+
+\section{Explicitly referencing and dereferencing}
+
+Several times, we had to the code to explicitly take a reference to, or dereference, variables.
+% Zie commit 02838ccca9e7b0db26041caa02955be70c06945d
+% Zie commit 90c83b321f4e866f9319de90d6f8288e1ab1d5e4
+The explicitness is somewhat inconsistent in Rust since the \texttt{.} operator implicitly dereferences its first argument, leading to cases where we had to modify code twice when replacing a method call with a function call.
+
+\section{Orphan instances}
+
+Rust forbids programmers to write orphan instances for traits. To define instances in a module, the module needs to define either the trait or the implemented type. However, when we wanted to \texttt{println!} an \texttt{Option<Permutation>}, this restriction also applied. 
+% Zie commit 38194f9f914fe60b342105b4241ddd8837521a81
+The workaround for this restriction requires us to define a temporary wrapper type \texttt{PermutationDisplay} which references a \texttt{Option<Permutation>}, implement formatting for this wrapper type, and a trait \texttt{CustomDisplay} to convert the \texttt{Option<Permutation>} to a \texttt{PermutationDisplay}.
+% Zie commit d8f51e734513ab7ca2b4181db117b49558b6b7ea
+This additionally required us to explicitly indicate lifetimes for these types, traits and implementations fince we are storing references.
+% Zie commit 88fdac09decea87d451cd9f02c42cc593ebe216a
+The trait (and therefore the wrapper type) also needed to made public before we could use it in the main function, which again cost a bit of extra time.
+% Zie commit ebe8deec0c3916380c3b112b16d9d661b6152402
+For other types, we decided to use a built-in Rust feature which derives debugging representations for data types.
+% Zie commit 4d73f413391cdba50f81e730fb4615ea8c29161e
+
+\section{Distinction between \texttt{ToIter} and \texttt{Iter}}
+
+Compared to Python, Rust makes a distinction between types that can be iterated over, and the iterator for those types. For example, in Python we can just say \texttt{map(function, list)}, but in Rust we explicitly have to convert to an iterator and back.
+% Zie commit 7b298b877ef3abde84656c0cee75aead27147a46 en 63b25ec759b104bb884bb3db4a44e7b61a6bb139
+
+\section{Use-after-free} \label{sec:use_after_free}
+
+To check that a given set of permutations forms a subgroup, we had to verify that all elements act on the same set, that the set is closed under taking inverses and compositions of permutations, and contains the identity element. Our first attempt was to get a single element from the set by taking the first value from an iterator, finding its size and comparing this to all other values. However, this iterator borrows a mutable reference to the set. When we tried to deallocate the iterator, the reported size would get deallocated too. Rust prevented this potential use-after-free.
+% Zie commit 4d3c04f1e896a25f0b148508f3401ebd273d30bb
+As an alternative, we had to explicitly note that the size is an \texttt{Option}, which gets set to a \texttt{Some(size)} during iteration over the set. Using early-return when it is still \texttt{None}, we could avoid the reference.
+% Zie commit 028039b0e1dff71f82d2fb9c9600487e852d233b
+
+\section{Option types}
+
+The function we defined in Section \ref{sec:use_after_free}, was complicated so we wanted to replace early exits. To achieve this, we decided to make use of the functor and monad structure on \texttt{Option}. Rust provides these in the form of the \texttt{map} \texttt{and\_then} method on \texttt{Option}. Compared to Haskell's \texttt{do} notation, this is still somewhat cumbersome, since we explicitly have to write lambda functions.
+% Zie commit 61f142ebd1e473e8616d86bee6a9c2bf891d38a4
+
+\end{document}
+
+\begin{minted}{rust}
+fn main() {
+    println!("Hello, World!");
+}
+\end{minted}
