@@ -7,6 +7,7 @@ use std::fmt;
 #[derive(Debug)]
 #[derive(PartialEq)]
 #[derive(Eq)]
+#[derive(Hash)]
 pub struct Permutation {
     // We represent the permutation as a mapping from int to int
     permutation: Vec<usize>,
