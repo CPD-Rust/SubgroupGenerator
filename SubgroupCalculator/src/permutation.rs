@@ -11,7 +11,7 @@ pub struct Permutation {
 
 impl fmt::Display for Permutation {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.permutation)
+        write!(f, "{:?}", self.permutation)
     }
 }
 
