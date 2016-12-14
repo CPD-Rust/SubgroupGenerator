@@ -3,7 +3,7 @@ use std::collections::HashSet;
 
 #[derive(Debug)]
 struct Subset {
-    order : usize,
+    size : usize,
     elements : HashSet<permutation::Permutation>,
 }
 
@@ -17,5 +17,5 @@ struct ConjugacyClass(Subset);
 pub fn trivial(order : usize) -> Subgroup {
     let mut group = HashSet::new();
     group.insert(permutation::identity(order));
-    group
+    Subgroup(Subset {size: order, elements: group})
 }
