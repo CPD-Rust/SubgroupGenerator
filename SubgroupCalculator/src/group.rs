@@ -48,7 +48,7 @@ fn check_closed(subset : Subset) -> Option<Subgroup> {
         }
     }
 
-    Some(Subgroup(subset));
+    Some(Subgroup(subset))
 }
 
 fn make_subset(elements : HashSet<permutation::Permutation>) -> Option<Subset> {
