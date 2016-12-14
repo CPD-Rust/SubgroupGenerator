@@ -9,6 +9,7 @@ use std::iter;
 #[derive(PartialEq)]
 #[derive(Eq)]
 #[derive(Hash)]
+#[derive(Clone)]
 pub struct Permutation {
     // We represent the permutation as a mapping from int to int
     pub permutation: Vec<usize>,

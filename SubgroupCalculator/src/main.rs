@@ -1,3 +1,5 @@
+use std::collections::HashSet;
+
 mod permutation;
 mod group;
 
@@ -23,4 +25,11 @@ fn main() {
     println!("inverse of {} is {}", perm2, permutation::invert(&perm2));
 
     println!("trivial group is {:?}", group::trivial(5));
+
+    let perm2_2 = permutation::composition(&perm2, &perm2);
+    let perm2_3 = permutation::composition(&perm2, &perm2_2);
+    let perm2_4 = permutation::composition(&perm2, &perm2_3);
+    let perm2_5 = permutation::composition(&perm2, &perm2_4);
+    let elements : HashSet<_> = [perm2, perm2_2, perm2_3, perm2_4, perm2_5].iter().cloned().collect();
+    println!("another group is {:?}", group::make_subgroup(elements));
 }
