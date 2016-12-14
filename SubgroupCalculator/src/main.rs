@@ -18,6 +18,6 @@ fn main() {
 
     println!("composing {} and {} gives {}", perm1, perm2, permutation::composition(&perm1, &perm2));
 
-    println!("inverse of {} is {}", identity, permutation::inverse(&identity));
-    println!("inverse of {} is {}", perm2, permutation::inverse(&perm2));
+    println!("inverse of {} is {}", identity, permutation::invert(&identity));
+    println!("inverse of {} is {}", perm2, permutation::invert(&perm2));
 }
