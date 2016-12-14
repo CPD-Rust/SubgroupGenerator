@@ -23,9 +23,10 @@ pub fn make_subgroup(elements : HashSet<permutation::Permutation>) -> Option<Sub
     if elements.len() <= 0 {
         return None;
     }
-    let &referenceElem = elements.iter().next().unwrap();
+    let iter = elements.iter();
+    let &referenceElem = iter.next().unwrap();
     let size = referenceElem.permutation.len();
-    for elem in &elements {
+    for elem in iter {
         if elem.permutation.len() != size {
             return None;
         }
