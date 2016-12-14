@@ -21,7 +21,7 @@ fn subset_size(elements : &HashSet<permutation::Permutation>) -> Option<usize> {
     // but that requires iterators which take a mutable reference,
     // and then this happened.
     let mut size : Option<usize>= None;
-    for elem in &elements {
+    for elem in elements.iter() {
         match size {
             None => {
                 size = Some(elem.permutation.len());
