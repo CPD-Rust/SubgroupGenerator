@@ -38,11 +38,10 @@ fn subset_size(elements : &HashSet<permutation::Permutation>) -> Option<usize> {
 
 fn check_closed(subset : Subset) -> Option<Subgroup> {
     // We need to check the group is closed under all operations.
-    let elements = &(subset.elements);
-    for g in elements {
-        for h in elements {
+    for g in &subset.elements {
+        for h in &subset.elements {
             let tempelem = permutation::composition(g,&permutation::invert(&h));
-            if !elements.contains(&tempelem) {
+            if !subset.elements.contains(&tempelem) {
                 return None;
             }
         }
