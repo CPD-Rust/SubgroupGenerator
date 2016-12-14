@@ -4,10 +4,10 @@
 // in a newtype and only use the constructor function that checks the invariants.
 struct Permutation {
     // We represent the permutation as a mapping from int to int
-    permutation: Vec<u32>,
+    permutation: Vec<usize>,
 }
 
-fn make_permutation(mapping : Vec<u32>) -> Option<Permutation> {
+fn make_permutation(mapping : Vec<usize>) -> Option<Permutation> {
     // Each object should occur exactly once in the map.
     for object in (0..mapping.len()) {
         let mut count = 0;
