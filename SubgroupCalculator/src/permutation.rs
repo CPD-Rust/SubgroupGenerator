@@ -18,7 +18,7 @@ impl fmt::Display for Permutation {
 
 struct PermutationDisplay<'a>(&'a Option<Permutation>);
 
-trait CustomDisplay {
+pub trait CustomDisplay {
     fn display<'a>(&'a self) -> PermutationDisplay<'a>;
 }
 
