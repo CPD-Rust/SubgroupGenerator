@@ -15,4 +15,6 @@ fn main() {
     for i in 1..6 {
         println!("perm1 action on {} is {}", i, permutation::action(&perm1, i));
     }
+
+    println!("composing {} and {} gives {}", perm1, perm2, permutation::composition(&perm1, &perm2));
 }
