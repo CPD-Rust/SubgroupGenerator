@@ -53,3 +53,8 @@ pub fn make_permutation(mapping : Vec<usize>) -> Option<Permutation> {
     }
     Some(Permutation{ permutation: mapping })
 }
+
+// Return the identity element of the permutation group with given order.
+pub fn identity(order : usize) -> Permutation {
+    make_permutation(vec![1..order+1]).expect("could not generate identity element")
+}
