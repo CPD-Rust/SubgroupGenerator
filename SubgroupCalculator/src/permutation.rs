@@ -7,7 +7,7 @@ struct Permutation {
     permutation: Vec<usize>,
 }
 
-fn make_permutation(mapping : Vec<usize>) -> Option<Permutation> {
+pub fn make_permutation(mapping : Vec<usize>) -> Option<Permutation> {
     // Each object should occur exactly once in the map.
     for object in (1..mapping.len() + 1) {
         let mut count = 0;
