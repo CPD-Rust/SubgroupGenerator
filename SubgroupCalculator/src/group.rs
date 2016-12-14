@@ -31,7 +31,7 @@ pub fn make_subgroup(elements : HashSet<permutation::Permutation>) -> Option<Sub
             size = elem.permutation.len();
         }
     }
-    assert_eq!(size != -1);
+    assert!(size != -1);
 
     // Then we need to check the group is closed under all operations.
     for g in &elements {
