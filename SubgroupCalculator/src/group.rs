@@ -47,6 +47,8 @@ pub fn make_subgroup(elements : HashSet<permutation::Permutation>) -> Option<Sub
             }
         }
     }
+
+    Some(Subgroup(Subset { size: size; elements: elements; }))
 }
 
 // Generate the trivial group on the given number of elements.
