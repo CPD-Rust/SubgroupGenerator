@@ -32,7 +32,7 @@ impl<'a> fmt::Display for PermutationDisplay<'a> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let PermutationDisplay(contents) = *self;
         match *contents {
-            Some(perm) => write!(f, "{}", perm),
+            Some(ref perm) => write!(f, "{}", perm),
             None => write!(f, "Nothing"),
         }
     }
