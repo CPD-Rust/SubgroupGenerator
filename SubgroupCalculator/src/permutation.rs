@@ -20,5 +20,5 @@ fn make_permutation(mapping : Vec<usize>) -> Option<Permutation> {
             return None;
         }
     }
-    Some(mapping)
+    Some(Permutation{ permutation: mapping })
 }
