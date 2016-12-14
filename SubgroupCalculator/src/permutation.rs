@@ -2,7 +2,7 @@
 // TODO: check if this is possible
 // In order to enforce that we get an actual permutation, we want to wrap the vector
 // in a newtype and only use the constructor function that checks the invariants.
-struct Permutation {
+pub struct Permutation {
     // We represent the permutation as a mapping from int to int
     permutation: Vec<usize>,
 }
