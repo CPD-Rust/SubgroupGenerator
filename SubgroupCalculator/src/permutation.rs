@@ -16,6 +16,15 @@ impl fmt::Display for Permutation {
     }
 }
 
+impl fmt::Display for Option<Permutation> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            Some(perm) => write!(f, "{}", perm),
+            None => write!(f, "Nothing"),
+        }
+    }
+}
+
 pub fn make_permutation(mapping : Vec<usize>) -> Option<Permutation> {
     // Each object should occur exactly once in the map.
     for object in (1..mapping.len() + 1) {
