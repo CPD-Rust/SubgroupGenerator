@@ -2,7 +2,7 @@ use permutation;
 use std::collections::HashSet;
 
 #[derive(Debug)]
-struct Subset {
+pub struct Subset {
     // The number of objects the permutations act on.
     size : usize,
     // The permutations in the set.
@@ -10,9 +10,9 @@ struct Subset {
 }
 
 #[derive(Debug)]
-struct Subgroup(Subset);
+pub struct Subgroup(Subset);
 #[derive(Debug)]
-struct ConjugacyClass(Subset);
+pub struct ConjugacyClass(Subset);
 
 // TODO: check for subgroups
 
