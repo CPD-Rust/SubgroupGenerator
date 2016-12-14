@@ -1,0 +1,6 @@
+[package]
+name = "SubgroupCalculator"
+version = "0.1.0"
+authors = ["Vierkantor <vierkantor@vierkantor.com>"]
+
+[dependencies]
