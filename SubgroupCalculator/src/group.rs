@@ -1,8 +1,9 @@
 use permutation;
+use std::collections::HashSet;
 
 struct Subset {
     order : usize,
-    elements : HashSet<Permutation>,
+    elements : HashSet<permutation::Permutation>,
 }
 
 struct Subgroup(Subset);
