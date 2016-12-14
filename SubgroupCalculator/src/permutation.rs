@@ -13,6 +13,16 @@ pub struct Permutation {
     permutation: Vec<usize>,
 }
 
+impl std::iter::ExactSizeIterator for Permutation {
+    fn len(&self) -> usize {
+        self.permutation.len()
+    }
+
+    fn is_empty(&self) -> bool {
+        self.permutation.is_empty()
+    }
+}
+
 impl fmt::Display for Permutation {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{:?}", self.permutation)
