@@ -10,8 +10,8 @@ fn main() {
     for i in 1..6 {
         println!("identity action on {} is {}", i, permutation::action(&identity, i));
     }
-    let perm1 = permutation::make_permutation(vec![5, 4, 3, 2, 1]);
-    let perm2 = permutation::make_permutation(vec![5, 3, 1, 2, 4]);
+    let perm1 = permutation::make_permutation(vec![5, 4, 3, 2, 1]).unwrap();
+    let perm2 = permutation::make_permutation(vec![5, 3, 1, 2, 4]).unwrap();
     for i in 1..6 {
         println!("perm1 action on {} is {}", i, permutation::action(&perm1, i));
     }
