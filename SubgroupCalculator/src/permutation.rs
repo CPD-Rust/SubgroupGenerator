@@ -7,6 +7,18 @@ struct Permutation {
     permutation: Vec<u32>,
 }
 
-fn makePermutation(mapping : Vec<u32>) -> Option<Permutation> {
-    None
+fn make_permutation(mapping : Vec<u32>) -> Option<Permutation> {
+    // Each object should occur exactly once in the map.
+    for object in range(0, mapping.len()) {
+        let mut count = 0;
+        for mapped in mapping {
+            if mapped == object {
+                count++;
+            }
+        }
+        if count != 1 {
+            return None;
+        }
+    }
+    Some(mapping)
 }
