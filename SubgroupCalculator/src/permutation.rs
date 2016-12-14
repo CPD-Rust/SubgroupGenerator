@@ -61,7 +61,7 @@ pub fn identity(order : usize) -> Permutation {
 }
 
 fn action(perm : &Permutation, object: usize) -> usize {
-    if object < 1 || object > perm.len() {
+    if object < 1 || object > perm.permutation.len() {
         panic!("The group action is not defined for this number");
     }
     perm.permutation[object-1]
