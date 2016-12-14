@@ -9,11 +9,11 @@ struct Permutation {
 
 fn make_permutation(mapping : Vec<u32>) -> Option<Permutation> {
     // Each object should occur exactly once in the map.
-    for object in range(0, mapping.len()) {
+    for object in (0..mapping.len()) {
         let mut count = 0;
         for mapped in mapping {
             if mapped == object {
-                count++;
+                count += 1;
             }
         }
         if count != 1 {
