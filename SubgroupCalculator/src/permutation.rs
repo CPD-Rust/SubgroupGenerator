@@ -30,7 +30,7 @@ impl CustomDisplay for Option<Permutation> {
 
 impl fmt::Display for CustomDisplay {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
+        match *self {
             Some(perm) => write!(f, "{}", perm),
             None => write!(f, "Nothing"),
         }
