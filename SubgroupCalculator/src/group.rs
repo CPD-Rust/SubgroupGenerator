@@ -1,4 +1,4 @@
-mod permutation;
+use permutation;
 
 struct Subset {
     order : usize,
