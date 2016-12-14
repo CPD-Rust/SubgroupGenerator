@@ -59,3 +59,10 @@ pub fn identity(order : usize) -> Permutation {
     let mapping = (1..order+1).collect::<Vec<usize>>();
     make_permutation(mapping).expect("could not generate identity element")
 }
+
+fn action(perm : &Permutation, object: usize) -> usize {
+    if object < 1 || object > perm.len() {
+        panic!("The group action is not defined for this number");
+    }
+    perm.permutation[object-1]
+}
