@@ -12,7 +12,7 @@ fn make_permutation(mapping : Vec<usize>) -> Option<Permutation> {
     for object in (0..mapping.len()) {
         let mut count = 0;
         for mapped in &mapping {
-            if mapped == object {
+            if *mapped == object {
                 count += 1;
             }
         }
