@@ -22,9 +22,7 @@ pub fn make_subgroup(elements : HashSet<permutation::Permutation>) -> Option<Sub
     // For this, we need at least one element.
     let mut iter = elements.iter();
     match iter.next() {
-        None => {
-            return None
-        }
+        None => None,
         Some(referenceElem) => {
             let size = referenceElem.permutation.len();
             for elem in iter {
@@ -33,19 +31,19 @@ pub fn make_subgroup(elements : HashSet<permutation::Permutation>) -> Option<Sub
                 }
             }
         }
-    };
 
-    // Then we need to check the group is closed under all operations.
-    for g in &elements {
-        for h in &elements {
-            let tempelem = permutation::composition(g,&permutation::invert(&h));
-            if !elements.contains(&tempelem) {
-                return None;
+        // Then we need to check the group is closed under all operations.
+        for g in &elements {
+            for h in &elements {
+                let tempelem = permutation::composition(g,&permutation::invert(&h));
+                if !elements.contains(&tempelem) {
+                    return None;
+                }
             }
         }
-    }
 
-    Some(Subgroup(Subset { size: size, elements: elements }))
+        Some(Subgroup(Subset { size: size, elements: elements }))
+    };
 }
 
 // Generate the trivial group on the given number of elements.
