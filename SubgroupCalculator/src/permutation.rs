@@ -68,6 +68,6 @@ pub fn action(perm : &Permutation, object: usize) -> usize {
 }
 
 pub fn composition(perm1 : &Permutation, perm2 : &Permutation) -> Permutation {
-    let mapping = perm1.permutation.map(|x|.action(perm2, x));
+    let mapping = perm1.permutation.map(|x| action(perm2, x));
     make_permutation(mapping).expect("Composition of permutations is not permutation")
 }
