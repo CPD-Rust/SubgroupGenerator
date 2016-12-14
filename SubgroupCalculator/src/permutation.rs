@@ -16,19 +16,19 @@ impl fmt::Display for Permutation {
     }
 }
 
-pub struct PermutationDisplay<'a>(&'a Option<Permutation>);
+struct PermutationDisplay<'a>(&'a Option<Permutation>);
 
-pub trait CustomDisplay {
+trait CustomDisplay {
     fn display<'a>(&'a self) -> PermutationDisplay<'a>;
 }
 
-pub impl CustomDisplay for Option<Permutation> {
+impl CustomDisplay for Option<Permutation> {
     fn display<'a>(&'a self) -> PermutationDisplay<'a> {
         PermutationDisplay(self)
     }
 }
 
-pub impl<'a> fmt::Display for PermutationDisplay<'a> {
+impl<'a> fmt::Display for PermutationDisplay<'a> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let PermutationDisplay(contents) = *self;
         match *contents {
