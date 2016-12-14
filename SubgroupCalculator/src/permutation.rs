@@ -1,4 +1,5 @@
 use std::fmt;
+use std::iter;
 
 // We would like to add an extra type parameter, making the size part of the type.
 // TODO: check if this is possible
