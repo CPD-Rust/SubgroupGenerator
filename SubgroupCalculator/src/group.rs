@@ -34,7 +34,7 @@ pub fn make_subgroup(elements : HashSet<permutation::Permutation>) -> Option<Sub
     // Then we need to check the group is closed under all operations.
     for g in &elements {
         for h in &elements {
-            let tempelem = permutation::composition(g,permutation::invert(&h));
+            let tempelem = permutation::composition(g,&permutation::invert(&h));
             if !elements.contains(&tempelem) {
                 return None;
             }
