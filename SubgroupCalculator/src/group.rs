@@ -71,6 +71,6 @@ pub fn make_subgroup(elements : HashSet<permutation::Permutation>) -> Option<Sub
 pub fn trivial(size : usize) -> Subgroup {
     let mut group = HashSet::new();
     group.insert(permutation::identity(size));
-    Subgroup(Subset {size: size, elements: group})
+    make_subgroup(group)
 }
 
