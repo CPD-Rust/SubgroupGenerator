@@ -16,7 +16,19 @@ impl fmt::Display for Permutation {
     }
 }
 
-impl fmt::Display for Option<Permutation> {
+struct PermutationDisplay(Option<Permutation>);
+
+trait CustomDisplay {
+    fn display(&self) -> PermutationDisplay;
+}
+
+impl CustomDisplay for Option<Permutation> {
+    fn display(&self) -> PermutationDisplay {
+        PermutationDisplay(self)
+    }
+}
+
+impl fmt::Display for CustomDisplay {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
             Some(perm) => write!(f, "{}", perm),
