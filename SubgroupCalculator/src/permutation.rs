@@ -11,17 +11,7 @@ use std::iter;
 #[derive(Hash)]
 pub struct Permutation {
     // We represent the permutation as a mapping from int to int
-    permutation: Vec<usize>,
-}
-
-impl std::iter::ExactSizeIterator for Permutation {
-    fn len(&self) -> usize {
-        self.permutation.len()
-    }
-
-    fn is_empty(&self) -> bool {
-        self.permutation.is_empty()
-    }
+    pub permutation: Vec<usize>,
 }
 
 impl fmt::Display for Permutation {
