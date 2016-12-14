@@ -9,7 +9,7 @@ pub struct Permutation {
     permutation: Vec<usize>,
 }
 
-impl Display for Permutation {
+impl fmt::Display for Permutation {
     fn fmt(&self, f: &fmt::Formatter) -> fmt::Result {
         write!(f, "{}", self.permutation)
     }
