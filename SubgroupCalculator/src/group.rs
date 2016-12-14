@@ -30,19 +30,19 @@ pub fn make_subgroup(elements : HashSet<permutation::Permutation>) -> Option<Sub
                     return None;
                 }
             }
-        }
 
-        // Then we need to check the group is closed under all operations.
-        for g in &elements {
-            for h in &elements {
-                let tempelem = permutation::composition(g,&permutation::invert(&h));
-                if !elements.contains(&tempelem) {
-                    return None;
+            // Then we need to check the group is closed under all operations.
+            for g in &elements {
+                for h in &elements {
+                    let tempelem = permutation::composition(g,&permutation::invert(&h));
+                    if !elements.contains(&tempelem) {
+                        return None;
+                    }
                 }
             }
-        }
 
-        Some(Subgroup(Subset { size: size, elements: elements }))
+            Some(Subgroup(Subset { size: size, elements: elements }))
+        }
     };
 }
 
