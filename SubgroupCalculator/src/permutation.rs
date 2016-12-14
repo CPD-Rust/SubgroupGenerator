@@ -75,7 +75,7 @@ pub fn composition(perm1 : &Permutation, perm2 : &Permutation) -> Permutation {
 pub fn invert(perm : &Permutation) -> Permutation {
     // Initialize because we want to index into the mapping.
     let mut mapping = vec![0; perm.permutation.len()];
-    for index, object in perm.permutation.iter().enumerate() {
+    for (index, object) in perm.permutation.iter().enumerate() {
         mapping[object-1] = index+1;
     }
     make_permutation(mapping).expect("Inverse of permutation is not permutation")
