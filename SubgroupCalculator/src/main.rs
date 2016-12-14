@@ -1,4 +1,5 @@
 mod permutation;
+mod group;
 
 use permutation::CustomDisplay;
 
@@ -20,4 +21,6 @@ fn main() {
 
     println!("inverse of {} is {}", identity, permutation::invert(&identity));
     println!("inverse of {} is {}", perm2, permutation::invert(&perm2));
+
+    println!("trivial group is {:?}", group::trivial(5));
 }
