@@ -20,18 +20,23 @@ pub struct ConjugacyClass(Subset);
 pub fn make_subgroup(elements : HashSet<permutation::Permutation>) -> Option<Subgroup> {
     // First we make it into a Subset by checking the sizes.
     // For this, we need at least one element.
-    if elements.len() <= 0 {
-        return None;
-    }
-    let mut size = -1;
+    let mut size : Option<usize>= None;
     for elem in &elements {
-        if size != -1 && elem.permutation.len() != size {
-            return None;
-        } else {
-            size = elem.permutation.len();
+        match size {
+            None => {
+                size = Some(elem.permutation.len());
+            }
+            Some(expected_size) => {
+                if elem.permutation.len() != expected_size {
+                    return None;
+                }
+            }
         }
     }
-    assert!(size != -1);
+    // There are no elements in this subgroup, which is wrong!
+    if size == None {
+        return None;
+    }
 
     // Then we need to check the group is closed under all operations.
     for g in &elements {
