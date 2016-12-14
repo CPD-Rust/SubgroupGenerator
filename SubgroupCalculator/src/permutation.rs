@@ -60,7 +60,7 @@ pub fn identity(order : usize) -> Permutation {
     make_permutation(mapping).expect("could not generate identity element")
 }
 
-fn action(perm : &Permutation, object: usize) -> usize {
+pub fn action(perm : &Permutation, object: usize) -> usize {
     if object < 1 || object > perm.permutation.len() {
         panic!("The group action is not defined for this number");
     }
