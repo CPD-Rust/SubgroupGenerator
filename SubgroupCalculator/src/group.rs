@@ -53,7 +53,7 @@ fn check_closed(subset : Subset) -> Option<Subgroup> {
 
 fn make_subset(elements : HashSet<permutation::Permutation>) -> Option<Subset> {
     subset_size(&elements)
-        .and_then(|size| => Subset { size: size, elements: elements })
+        .and_then(|size| Subset { size: size, elements: elements })
 }
 
 // When the set is a group, wrap it in the Subgroup type.
@@ -61,7 +61,7 @@ pub fn make_subgroup(elements : HashSet<permutation::Permutation>) -> Option<Sub
     // First we make it into a Subset by checking the sizes.
     // For this, we need at least one element.
     make_subset(elements)
-        .and_then(|subset| => check_closed(subset))
+        .and_then(|subset| check_closed(subset))
 
 }
 
