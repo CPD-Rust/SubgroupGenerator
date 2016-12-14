@@ -28,9 +28,9 @@ impl CustomDisplay for Option<Permutation> {
     }
 }
 
-impl fmt::Display for CustomDisplay {
+impl fmt::Display for PermutationDisplay {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let PermutationDisplay(contents) = self.display();
+        let PermutationDisplay(contents) = *self;
         match *contents {
             Some(perm) => write!(f, "{}", perm),
             None => write!(f, "Nothing"),
