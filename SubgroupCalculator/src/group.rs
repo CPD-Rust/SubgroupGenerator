@@ -16,10 +16,10 @@ pub struct ConjugacyClass(Subset);
 
 // TODO: check for subgroups
 
-// When the set is a group, wrap it in the Subgroup type.
-pub fn make_subgroup(elements : HashSet<permutation::Permutation>) -> Option<Subgroup> {
-    // First we make it into a Subset by checking the sizes.
-    // For this, we need at least one element.
+fn subset_size(elements : &HashSet<permutation::Permutation>) -> Option<usize> {
+    // TODO: we wanted to just take "an element" from the elements
+    // but that requires iterators which take a mutable reference,
+    // and then this happened.
     let mut size : Option<usize>= None;
     for elem in &elements {
         match size {
@@ -32,15 +32,15 @@ pub fn make_subgroup(elements : HashSet<permutation::Permutation>) -> Option<Sub
                 }
             }
         }
-    }
-    // There are no elements in this subgroup, which is wrong!
-    if size == None {
-        return None;
-    }
+    };
+    size
+}
 
-    // Then we need to check the group is closed under all operations.
-    for g in &elements {
-        for h in &elements {
+fn check_closed(subset : Subset) -> Option<Subgroup> {
+    // We need to check the group is closed under all operations.
+    let elements = &(subset.elements);
+    for g in elements {
+        for h in elements {
             let tempelem = permutation::composition(g,&permutation::invert(&h));
             if !elements.contains(&tempelem) {
                 return None;
@@ -48,7 +48,21 @@ pub fn make_subgroup(elements : HashSet<permutation::Permutation>) -> Option<Sub
         }
     }
 
-    Some(Subgroup(Subset { size: size, elements: elements, }))
+    Some(Subgroup(subset));
+}
+
+fn make_subset(elements : HashSet<permutation::Permutation>) -> Option<Subset> {
+    subset_size(&elements)
+        .and_then(|size| => Subset { size: size, elements: elements })
+}
+
+// When the set is a group, wrap it in the Subgroup type.
+pub fn make_subgroup(elements : HashSet<permutation::Permutation>) -> Option<Subgroup> {
+    // First we make it into a Subset by checking the sizes.
+    // For this, we need at least one element.
+    make_subset(elements)
+        .and_then(|subset| => check_closed(subset))
+
 }
 
 // Generate the trivial group on the given number of elements.
