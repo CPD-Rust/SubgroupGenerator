@@ -16,14 +16,14 @@ impl fmt::Display for Permutation {
     }
 }
 
-struct PermutationDisplay(Option<Permutation>);
+struct PermutationDisplay<'a>(&'a Option<Permutation>);
 
 trait CustomDisplay {
-    fn display(&self) -> PermutationDisplay;
+    fn display<'a>(&'a self) -> PermutationDisplay<'a>;
 }
 
 impl CustomDisplay for Option<Permutation> {
-    fn display(&self) -> PermutationDisplay {
+    fn display<'a>(&'a self) -> PermutationDisplay<'a> {
         PermutationDisplay(self)
     }
 }
