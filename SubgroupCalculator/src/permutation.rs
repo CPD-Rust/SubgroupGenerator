@@ -28,7 +28,7 @@ impl CustomDisplay for Option<Permutation> {
     }
 }
 
-impl fmt::Display for PermutationDisplay {
+impl<'a> fmt::Display for PermutationDisplay<'a> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let PermutationDisplay(contents) = *self;
         match *contents {
