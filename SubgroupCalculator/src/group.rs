@@ -91,16 +91,16 @@ pub fn generate(generators : &Subset) -> Subgroup {
     result.insert(permutation::identity(generators.size));
     for elem1 in &generators.elements {
         for elem2 in &generators.elements {
-            to_visit.insert((elem1, elem2));
+            to_visit.push_back((elem1, elem2));
         }
         result.insert(elem1.clone());
     }
-    while let Some((elem1, elem2)) = to_visit.pop() {
+    while let Some((elem1, elem2)) = to_visit.pop_front() {
         let product = permutation::composition(elem1, elem2);
         if !result.contains(&product) {
             for elem1 in &result {
-                to_visit.push((elem1, product));
-                to_visit.push((product, elem1));
+                to_visit.push_back((elem1, product));
+                to_visit.push_back((product, elem1));
             }
             result.insert(product);
         }
