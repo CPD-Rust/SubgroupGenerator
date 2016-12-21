@@ -79,7 +79,7 @@ pub fn conjugate( subgroup : Subgroup, g : &permutation::Permutation) -> Subgrou
     let Subgroup(elem_set) = subgroup;
     for elem in &elem_set.elements {
         let conjugate_elem = permutation::composition(g,&permutation::composition(elem,&permutation::invert(g)));
-        newgroup.elemenets.insert(conjugate_elem);
+        newgroup.insert(conjugate_elem);
     }
     make_subgroup(newgroup).unwrap()
 }
