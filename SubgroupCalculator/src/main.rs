@@ -43,5 +43,5 @@ fn main() {
     let generated = group::generate(&group::make_subset(generators).unwrap());
     println!("Group generated is {:?}", generated);
 
-    println!("S1 is {:?}", group::elements(1));
+    println!("S4 is {:?}", group::elements(4));
 }
