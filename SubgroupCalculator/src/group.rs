@@ -86,23 +86,25 @@ pub fn conjugate( subgroup : &Subgroup, g : &permutation::Permutation) -> Subgro
 }
 
 pub fn generate(generators : &Subset) -> Subgroup {
-    let mut to_visit = VecDeque::new();
     let mut result = HashSet::new();
-    result.insert(permutation::identity(generators.size));
-    for elem1 in &generators.elements {
-        for elem2 in &generators.elements {
-            to_visit.push_back((elem1, elem2));
-        }
-        result.insert(elem1.clone());
-    }
-    while let Some((elem1, elem2)) = to_visit.pop_front() {
-        let product = permutation::composition(elem1, elem2);
-        if !result.contains(&product) {
-            for elem1 in &result {
-                to_visit.push_back((elem1, &product));
-                to_visit.push_back((&product, elem1));
+    {
+        let mut to_visit = VecDeque::new();
+        result.insert(permutation::identity(generators.size));
+        for elem1 in &generators.elements {
+            for elem2 in &generators.elements {
+                to_visit.push_back((elem1, elem2));
             }
-            result.insert(product);
+            result.insert(elem1.clone());
+        }
+        while let Some((elem1, elem2)) = to_visit.pop_front() {
+            let product = permutation::composition(elem1, elem2);
+            if !result.contains(&product) {
+                for elem1 in &result {
+                    to_visit.push_back((elem1, &product));
+                    to_visit.push_back((&product, elem1));
+                }
+                result.insert(product);
+            }
         }
     }
     make_subgroup(result).unwrap()
