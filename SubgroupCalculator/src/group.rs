@@ -1,5 +1,6 @@
 use permutation;
 use std::collections::HashSet;
+use std::collections::VecDeque;
 
 #[derive(Debug)]
 pub struct Subset {
@@ -96,8 +97,8 @@ pub fn generate(generators : &Subset) -> Subgroup {
     }
     while let Some((elem1, elem2)) = to_visit.pop() {
         let product = permutation::composition(elem1, elem2);
-        if !result.contains(product) {
-            for elem1 in &result.elements {
+        if !result.contains(&product) {
+            for elem1 in &result {
                 to_visit.push((elem1, product));
                 to_visit.push((product, elem1));
             }
