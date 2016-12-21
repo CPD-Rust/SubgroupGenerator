@@ -42,4 +42,6 @@ fn main() {
         .iter().cloned().collect();
     let generated = group::generate(&group::make_subset(generators).unwrap());
     println!("Group generated is {:?}", generated);
+
+    println!("S3 is {:?}", group::elements(3));
 }
