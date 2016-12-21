@@ -109,11 +109,15 @@ pub fn generate(generators : &Subset) -> Subgroup {
     make_subgroup(result).unwrap()
 }
 
+// calculate all elements of the symmetric group S_n (for n > 1)
 pub fn elements(size : usize) -> Subgroup {
+    assert!(size > 1);
+
     let mut cycle = (2..size+1).collect::<Vec<usize>>();
     cycle.push(1);
     let mut transposition = vec![2, 1];
     transposition.extend(3..size+1);
+
     let gen1 = permutation::make_permutation(cycle).unwrap();
     let gen2 = permutation::make_permutation(transposition).unwrap();
     let generators = make_subset([gen1, gen2].iter().cloned().collect()).unwrap();
