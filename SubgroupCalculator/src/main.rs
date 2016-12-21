@@ -35,7 +35,10 @@ fn main() {
     println!("another group is {:?}", &testgroup);
     println!("Conjugate test: {:?}", group::conjugate(&testgroup,&perm1));
 
-    let generators : HashSet<_> = [perm2.clone()]
+    let gen1 = permutation::make_permutation(vec![2,3,1,4,5]).unwrap();
+    let gen2 = permutation::make_permutation(vec![2,1,3,4,5]).unwrap();
+    let gen3 = permutation::make_permutation(vec![1,2,3,5,4]).unwrap();
+    let generators : HashSet<_> = [gen1.clone(), gen2.clone(), gen3.clone()]
         .iter().cloned().collect();
     let generated = group::generate(&group::make_subset(generators).unwrap());
     println!("Group generated is {:?}", generated);

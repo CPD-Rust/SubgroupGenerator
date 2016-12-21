@@ -15,8 +15,6 @@ pub struct Subgroup(Subset);
 #[derive(Debug)]
 pub struct ConjugacyClass(Subset);
 
-// TODO: check for subgroups
-
 fn subset_size(elements : &HashSet<permutation::Permutation>) -> Option<usize> {
     // TODO: we wanted to just take "an element" from the elements
     // but that requires iterators which take a mutable reference,
