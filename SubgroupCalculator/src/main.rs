@@ -7,5 +7,7 @@ use permutation::CustomDisplay;
 
 fn main() {
     let result = group::all_subgroups(3);
-    println!("All subgroups are {:?}", result);
+    for group in &result {
+        println!("Subgroup");
+    }
 }
