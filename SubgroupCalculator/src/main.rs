@@ -37,6 +37,6 @@ fn main() {
 
     let generators : HashSet<_> = [perm2.clone()]
         .iter().cloned().collect();
-    let generated = group::generate(group::make_subset(generators).unwrap());
+    let generated = group::generate(&group::make_subset(generators).unwrap());
     println!("Group generated is {:?}", generated);
 }

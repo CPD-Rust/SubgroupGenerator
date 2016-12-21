@@ -99,8 +99,8 @@ pub fn generate(generators : &Subset) -> Subgroup {
         let product = permutation::composition(elem1, elem2);
         if !result.contains(&product) {
             for elem1 in &result {
-                to_visit.push_back((elem1, product));
-                to_visit.push_back((product, elem1));
+                to_visit.push_back((elem1, &product));
+                to_visit.push_back((&product, elem1));
             }
             result.insert(product);
         }
