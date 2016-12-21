@@ -87,7 +87,7 @@ pub fn conjugate( subgroup : &Subgroup, g : &permutation::Permutation) -> Subgro
 
 pub fn generate(generators : &Subset) -> Subgroup {
     let mut to_visit = VecDeque::new();
-    let result = HashSet::new();
+    let mut result = HashSet::new();
     result.insert(permutation::identity(generators.size));
     for elem1 in &generators.elements {
         for elem2 in &generators.elements {
