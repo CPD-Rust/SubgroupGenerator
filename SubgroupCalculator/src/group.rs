@@ -102,7 +102,7 @@ pub fn generate(generators : &Subset) -> Subgroup {
                 // since we move product to the set, we have to know where it
                 // ends up
                 result.insert(product.clone());
-                let product_ref = result.get(&product);
+                let product_ref = result.get(&product).unwrap();
                 for elem1 in &result {
                     to_visit.push_back((elem1, product_ref));
                     to_visit.push_back((product_ref, elem1));
