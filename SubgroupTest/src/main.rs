@@ -22,6 +22,7 @@ impl Ispermelement for PermElement {
         //Check if all elements are indeed in the interval [1, max_n]
         let mut tempbool = true;
         for x in &self.permutation {
+            // TODO Waarom kan deze vergelijking met max_n wel? Fix de & sowieso even.
             tempbool = tempbool && (x <= &self.max_n) && (*x >= 1);
         }
 

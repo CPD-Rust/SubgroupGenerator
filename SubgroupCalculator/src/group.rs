@@ -74,3 +74,11 @@ pub fn trivial(size : usize) -> Subgroup {
     make_subgroup(group).unwrap()
 }
 
+pub fn conjugate( subgroup : Subgroup, g : &permutation::Permutation) -> Subgroup {
+    let mut newgroup = HashSet::new();
+    for elem in &subgroup.elements {
+        let conjugate_elem = permutation::composition(g,&permutation::composition(elem,&permutation::invert(g)));
+        newgroup.elemenets.insert(conjugate_elem);
+    }
+    make_subgroup(newgroup).unwrap()
+}
