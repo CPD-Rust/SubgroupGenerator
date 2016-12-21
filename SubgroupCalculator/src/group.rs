@@ -151,7 +151,7 @@ pub fn all_subgroups(size : usize) -> BTreeSet<Subgroup> {
     let Subgroup(elem_set) = elements(size);
     let elems = elem_set.elements;
 
-    let mut result = Vec::new();
+    let mut result = BTreeSet::new();
     for elem1 in &elems {
         for elem2 in &elems {
             for elem3 in &elems {
