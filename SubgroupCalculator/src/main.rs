@@ -6,5 +6,5 @@ mod group;
 use permutation::CustomDisplay;
 
 fn main() {
-    println!("S3 is {:?}", group::elements(3));
+    println!("S4 is {:?}", group::elements(4));
 }
