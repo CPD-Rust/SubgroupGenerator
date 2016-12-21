@@ -114,8 +114,8 @@ pub fn elements(size : usize) -> Subgroup {
     cycle.push(1);
     let mut transposition = vec![2, 1];
     transposition.extend(3..size+1);
-    let gen1 = permutation::make_permutation(cycle);
-    let gen2 = permutation::make_permutation(transposition);
-    let generators = make_subset([gen1, gen2].iter().collect());
+    let gen1 = permutation::make_permutation(cycle).unwrap();
+    let gen2 = permutation::make_permutation(transposition).unwrap();
+    let generators = make_subset([gen1, gen2].iter().collect()).unwrap();
     generate(&generators)
 }
