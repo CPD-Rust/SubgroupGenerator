@@ -71,7 +71,14 @@ immutable reference exists. This makes sense if we remember that we are inside a
 in the previous loop we had an immutable reference to an element of result It makes sens that we then cannot
 insert an element in result in the next iteration. Indeed, suppose that this new insert causes result to
 resize, then our previous reference could point to invalid data. Rust prevented this dangling pointer.
-loop. 
+%Zie commit b207976f56fe0d0dfc9ae8f0e42507b4219c54fd
+
+
+Initially we attempted to fix this by basically cloning everything that we used to reference. However, this
+caused our program to take up enormous amounts of memory and we therefore considered this solution to be
+infeasible. We opted to redesign the generate function entirely. Simply put, we used two BTreeSets to split
+where we take our elements from and where we add our elements to. Then we used the property that when these
+two are BTreesSets are equal, we are done.
 
 
 \end{document}
