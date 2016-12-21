@@ -6,5 +6,6 @@ mod group;
 use permutation::CustomDisplay;
 
 fn main() {
-    println!("S7 is {:?}", group::elements(7));
+    let result = all_subgroups(3);
+    println!("All subgroups are {:?}", result);
 }

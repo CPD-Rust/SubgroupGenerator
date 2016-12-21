@@ -146,3 +146,21 @@ pub fn elements(size : usize) -> Subgroup {
     let generators = make_subset([gen1, gen2].iter().cloned().collect()).unwrap();
     generate_fixpoint(&generators)
 }
+
+pub fn all_subgroups(size : usize) -> HashSet<Subgroup> {
+    let elems = elements(size);
+
+    let mut result = HashSet::new();
+    for elem1 in &elems {
+        for elem2 in &elems {
+            for elem3 in &elems {
+                // TODO: dit kan beter.
+                let generators = make_subset([elem1, elem2, elem3].iter()
+                    .cloned().collect()).unwrap();
+                result.insert(generate_fixpoint(generators));
+            }
+        }
+    }
+
+    result
+}
