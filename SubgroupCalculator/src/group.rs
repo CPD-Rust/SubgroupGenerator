@@ -2,7 +2,7 @@ use permutation;
 use std::collections::HashSet;
 use std::collections::VecDeque;
 
-#[derive(Debug)]
+#[derive(Debug), derive(Eq), derive(Hash)]
 pub struct Subset {
     // The number of objects the permutations act on.
     size : usize,
@@ -10,7 +10,7 @@ pub struct Subset {
     elements : HashSet<permutation::Permutation>,
 }
 
-#[derive(Debug)]
+#[derive(Debug), derive(Eq), derive(Hash)]
 pub struct Subgroup(Subset);
 #[derive(Debug)]
 pub struct ConjugacyClass(Subset);
