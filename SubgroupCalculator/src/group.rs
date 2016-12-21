@@ -74,7 +74,7 @@ pub fn trivial(size : usize) -> Subgroup {
     make_subgroup(group).unwrap()
 }
 
-pub fn conjugate( subgroup : Subgroup, g : &permutation::Permutation) -> Subgroup {
+pub fn conjugate( subgroup : &Subgroup, g : &permutation::Permutation) -> Subgroup {
     let mut newgroup = HashSet::new();
     let Subgroup(elem_set) = subgroup;
     for elem in &elem_set.elements {
