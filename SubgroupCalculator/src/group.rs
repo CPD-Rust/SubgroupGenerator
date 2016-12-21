@@ -109,6 +109,23 @@ pub fn generate(generators : &Subset) -> Subgroup {
     make_subgroup(result).unwrap()
 }
 
+pub fn generate_fixpoint(generators : &Subset) -> Subgroup {
+    let mut old_result = HashSet::new();
+    let mut new_result = HashSet::new();
+    for elem1 in &generators.elements {
+        new_result.insert(elem1.clone());
+    }
+    while old_result != new_result {
+        old_result = new_result.clone();
+        for elem1 in &old_result {
+            for elem2 in &old_result {
+                new_result.insert(permutation::composition(elem1, elem2));
+            }
+        }
+    }
+    new_result
+}
+
 // calculate all elements of the symmetric group S_n (for n > 1)
 pub fn elements(size : usize) -> Subgroup {
     assert!(size > 1);
@@ -121,5 +138,5 @@ pub fn elements(size : usize) -> Subgroup {
     let gen1 = permutation::make_permutation(cycle).unwrap();
     let gen2 = permutation::make_permutation(transposition).unwrap();
     let generators = make_subset([gen1, gen2].iter().cloned().collect()).unwrap();
-    generate(&generators)
+    generate_fixpoint(&generators)
 }
