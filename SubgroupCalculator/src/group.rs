@@ -147,7 +147,7 @@ pub fn elements(size : usize) -> Subgroup {
     generate_fixpoint(&generators)
 }
 
-pub fn all_subgroups(size : usize) -> Vec<Subgroup> {
+pub fn all_subgroups(size : usize) -> BTreeSet<Subgroup> {
     let Subgroup(elem_set) = elements(size);
     let elems = elem_set.elements;
 
@@ -158,12 +158,9 @@ pub fn all_subgroups(size : usize) -> Vec<Subgroup> {
                 // TODO: dit kan beter.
                 let generators = make_subset([elem1.clone(), elem2.clone(),
                     elem3.clone()].iter() .cloned().collect()).unwrap();
-                result.push(generate_fixpoint(&generators));
+                result.insert(generate_fixpoint(&generators));
             }
         }
     }
-    result.sort();
-    result.dedup();
-
     result
 }
