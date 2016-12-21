@@ -23,7 +23,8 @@ fn subset_size(elements : &BTreeSet<permutation::Permutation>) -> Option<usize> 
     for elem in elements {
         match size {
             None => {
-                size = Some(elem.permutation.len());
+                //size = Some(elem.permutation.len());
+                return Some(elem.permutation.len());
             }
             Some(expected_size) => {
                 if elem.permutation.len() != expected_size {
@@ -37,6 +38,7 @@ fn subset_size(elements : &BTreeSet<permutation::Permutation>) -> Option<usize> 
 
 fn check_closed(subset : Subset) -> Option<Subgroup> {
     // We need to check the group is closed under all operations.
+    /*
     {
         let elements = &(subset.elements);
         for g in elements {
@@ -48,6 +50,7 @@ fn check_closed(subset : Subset) -> Option<Subgroup> {
             }
         }
     };
+    */
 
     Some(Subgroup(subset))
 }
