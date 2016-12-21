@@ -99,11 +99,14 @@ pub fn generate(generators : &Subset) -> Subgroup {
         while let Some((elem1, elem2)) = to_visit.pop_front() {
             let product = permutation::composition(elem1, elem2);
             if !result.contains(&product) {
+                // since we move product to the set, we have to know where it
+                // ends up
+                result.insert(product.clone());
+                let product_ref = result.get(&product);
                 for elem1 in &result {
-                    to_visit.push_back((elem1, &product));
-                    to_visit.push_back((&product, elem1));
+                    to_visit.push_back((elem1, product_ref));
+                    to_visit.push_back((product_ref, elem1));
                 }
-                result.insert(product);
             }
         }
     }
