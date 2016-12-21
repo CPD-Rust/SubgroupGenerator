@@ -10,6 +10,7 @@ use std::iter;
 #[derive(Eq)]
 #[derive(Hash)]
 #[derive(Clone)]
+#[derive(PartialOrd, Ord)]
 pub struct Permutation {
     // We represent the permutation as a mapping from int to int
     pub permutation: Vec<usize>,
@@ -45,6 +46,7 @@ impl<'a> fmt::Display for PermutationDisplay<'a> {
 
 pub fn make_permutation(mapping : Vec<usize>) -> Option<Permutation> {
     // Each object should occur exactly once in the map.
+    /*
     for object in 1..mapping.len() + 1 {
         let mut count = 0;
         for mapped in &mapping {
@@ -56,6 +58,7 @@ pub fn make_permutation(mapping : Vec<usize>) -> Option<Permutation> {
             return None;
         }
     }
+    */
     Some(Permutation{ permutation: mapping })
 }
 
