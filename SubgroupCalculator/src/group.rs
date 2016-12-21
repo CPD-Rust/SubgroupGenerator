@@ -123,7 +123,7 @@ pub fn generate_fixpoint(generators : &Subset) -> Subgroup {
             }
         }
     }
-    new_result
+    make_subgroup(new_result).unwrap()
 }
 
 // calculate all elements of the symmetric group S_n (for n > 1)
