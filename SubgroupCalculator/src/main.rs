@@ -33,5 +33,5 @@ fn main() {
     let elements : HashSet<_> = [perm2, perm2_2, perm2_3, perm2_4, perm2_5].iter().cloned().collect();
     let testgroup = group::make_subgroup(elements);
     println!("another group is {:?}", testgroup);
-
+    println!("Conjugate test: {:?}", group::conjugate(testgroup,perm2));
 }
