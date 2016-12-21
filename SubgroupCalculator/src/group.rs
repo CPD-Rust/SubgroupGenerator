@@ -156,8 +156,8 @@ pub fn all_subgroups(size : usize) -> HashSet<Subgroup> {
         for elem2 in &elems {
             for elem3 in &elems {
                 // TODO: dit kan beter.
-                let generators = make_subset([elem1, elem2, elem3].iter()
-                    .cloned().collect()).unwrap();
+                let generators = make_subset([elem1.clone(), elem2.clone(),
+                    elem3.clone()].iter() .cloned().collect()).unwrap();
                 result.push(generate_fixpoint(generators));
             }
         }
