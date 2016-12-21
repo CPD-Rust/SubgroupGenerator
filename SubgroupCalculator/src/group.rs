@@ -162,6 +162,8 @@ pub fn all_subgroups(size : usize) -> Vec<Subgroup> {
             }
         }
     }
+    result.sort();
+    result.dedup();
 
     result
 }
