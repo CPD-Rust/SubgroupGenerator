@@ -34,4 +34,9 @@ fn main() {
     let testgroup = group::make_subgroup(elements).unwrap();
     println!("another group is {:?}", &testgroup);
     println!("Conjugate test: {:?}", group::conjugate(&testgroup,&perm1));
+
+    let generators : HashSet<_> = [perm2.clone()]
+        .iter().cloned().collect();
+    let generated = group::generate(group::make_subset(generators).unwrap);
+    println!("Group generated is {:?}", generated);
 }

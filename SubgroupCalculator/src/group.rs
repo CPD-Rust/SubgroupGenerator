@@ -53,7 +53,7 @@ fn check_closed(subset : Subset) -> Option<Subgroup> {
     Some(Subgroup(subset))
 }
 
-fn make_subset(elements : HashSet<permutation::Permutation>) -> Option<Subset> {
+pub fn make_subset(elements : HashSet<permutation::Permutation>) -> Option<Subset> {
     subset_size(&elements)
         .map(|size| Subset { size: size, elements: elements })
 }
@@ -82,4 +82,27 @@ pub fn conjugate( subgroup : &Subgroup, g : &permutation::Permutation) -> Subgro
         newgroup.insert(conjugate_elem);
     }
     make_subgroup(newgroup).unwrap()
+}
+
+pub fn generate(generators : &Subset) -> Subgroup {
+    let mut to_visit = VecDeque::new();
+    let result = HashSet::new();
+    result.insert(permutation::identity(generators.size));
+    for elem1 in &generators.elements {
+        for elem2 in &generators.elements {
+            to_visit.insert((elem1, elem2));
+        }
+        result.insert(elem1.clone());
+    }
+    while let Some((elem1, elem2)) = to_visit.pop() {
+        let product = permutation::composition(elem1, elem2);
+        if !result.contains(product) {
+            for elem1 in &result.elements {
+                to_visit.push((elem1, product));
+                to_visit.push((product, elem1));
+            }
+            result.insert(product);
+        }
+    }
+    make_subgroup(result).unwrap()
 }
