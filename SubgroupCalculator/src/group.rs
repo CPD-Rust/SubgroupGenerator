@@ -92,20 +92,18 @@ pub fn generate(generators : &Subset) -> Subgroup {
         result.insert(permutation::identity(generators.size));
         for elem1 in &generators.elements {
             for elem2 in &generators.elements {
-                to_visit.push_back((elem1, elem2));
+                to_visit.push_back((elem1.clone(), elem2.clone()));
             }
             result.insert(elem1.clone());
         }
         while let Some((elem1, elem2)) = to_visit.pop_front() {
-            let product = permutation::composition(elem1, elem2);
-            if !result.contains(&product) {
+            let product = permutation::composition(&elem1, &elem2);
+            if result.insert(product.clone()) {
                 // since we move product to the set, we have to know where it
                 // ends up
-                result.insert(product.clone());
-                let product_ref = result.get(&product).unwrap();
                 for elem1 in &result {
-                    to_visit.push_back((elem1, product_ref));
-                    to_visit.push_back((product_ref, elem1));
+                    to_visit.push_back((elem1.clone(), product.clone()));
+                    to_visit.push_back((product.clone(), elem1.clone()));
                 }
             }
         }
