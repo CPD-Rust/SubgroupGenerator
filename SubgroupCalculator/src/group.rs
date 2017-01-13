@@ -167,7 +167,7 @@ pub fn all_subgroups(size : usize) -> BTreeSet<Subgroup> {
     for i in 0 .. threadCount {
         let threadTx = tx.clone();
         let (tx, rx) = mpsc::channel();
-        channels.append(tx);
+        channels.push(tx);
 
         let resultCell = result.clone();
         thread::spawn(move || {
