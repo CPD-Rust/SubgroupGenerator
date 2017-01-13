@@ -5,7 +5,7 @@ use std::sync::{Arc, Mutex};
 use std::thread;
 use std::sync::mpsc;
 
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Subset {
     // The number of objects the permutations act on.
     size : usize,
@@ -13,7 +13,7 @@ pub struct Subset {
     elements : BTreeSet<permutation::Permutation>,
 }
 
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Subgroup(Subset);
 #[derive(Debug)]
 pub struct ConjugacyClass(Subset);
