@@ -18,10 +18,9 @@ pub struct Subgroup(Subset);
 #[derive(Debug)]
 pub struct ConjugacyClass(Subset);
 
+// Determine the size of all elements of the set.
+// If the set is empty or elements disagree on the size, returns None.
 fn subset_size(elements : &BTreeSet<permutation::Permutation>) -> Option<usize> {
-    // TODO: we wanted to just take "an element" from the elements
-    // but that requires iterators which take a mutable reference,
-    // and then this happened.
     let mut size : Option<usize>= None;
     for elem in elements {
         match size {
@@ -163,7 +162,7 @@ pub fn all_subgroups(size : usize) -> BTreeSet<Subgroup> {
     let (tx, rx) = mpsc::channel();
     let mut channels : Vec<mpsc::Sender<(permutation::Permutation, permutation::Permutation, permutation::Permutation)>> = Vec::new();
 
-    let threadCount = 16;
+    let threadCount = 10;
     for i in 0 .. threadCount {
         let threadTx = tx.clone();
         let (tx, rx) = mpsc::channel();
@@ -174,7 +173,6 @@ pub fn all_subgroups(size : usize) -> BTreeSet<Subgroup> {
             let mut localResult = BTreeSet::new();
             // As long as there is work to do, do work.
             for (elem1, elem2, elem3) in rx {
-                // TODO: dit kan beter.
                 let generators = make_subset([elem1, elem2, elem3].iter()
                     .cloned().collect()).unwrap();
 
