@@ -88,6 +88,8 @@ In our first attempt, we locked the mutex in the main thread and returned a clon
 % Zie commit 6117b984219ee09892561b87c7bf08fe660fc1b1
 % Zie commit 5111c8b2bfd4d2790bbe5def1dd36dd1740a9575
 
+We also ran into problems with borrowing, because we gave threads references to values that only existed for the scope of the function, but Rust cannot statically guarantee the threads terminated before the value went out of scope. However, we could not manually assert this either, so we had to implement a workaround by cloning the referenced values.
+
 \end{document}
 
 \begin{minted}{rust}

@@ -164,6 +164,8 @@ pub fn all_subgroups(size : usize) -> BTreeSet<Subgroup> {
     let (tx, rx) = mpsc::channel();
     for elem1 in &elems {
         let resultCell = result.clone();
+        let elem1 = elem1.clone();
+        let elems = elems.clone();
         let tx = tx.clone();
 
         thread::spawn(move || {
