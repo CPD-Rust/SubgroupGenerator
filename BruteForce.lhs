@@ -155,7 +155,7 @@ All the elements of |S5| are now easily computed. We don't want to manually writ
 elements :: Subgroup
 elements = generate $ Set.fromList
     [ S5 (Five 2, Five 1, Five 3, Five 4, Five 5)
-    , S5 (Five 2, Five 3, Five 4, Five 5, Five 1)
+    , S5 (Five 2, Five 3, Five 4, Five 1, Five 5)
     ]
 \end{code}
 
@@ -259,13 +259,13 @@ isCounterexample h1 h2
 \end{code}
 
 The |main| function which is called when the program runs. We have two implementations, either computing all subgroups and outputting them as quickly as possible, or finding a counterexample somewhere in all the subgroups which have been calculated.
-\begin{code}%this code is hidden to the Haskell compiler
+\begin{code}
 main :: IO ()
 main = do
     hSetBuffering stdout NoBuffering
     putStrLn $ show allSubgroups
-\end{code}%this code is hidden to the Haskell compiler
-\begin{code}
+\end{code}
+\begin{code}%this code is hidden to the Haskell compiler
 main :: IO ()
 main = mapM_ (putCounterexample) [(h1, h2) |
     h1 <- Set.toList allSubgroups,
@@ -278,7 +278,7 @@ main = mapM_ (putCounterexample) [(h1, h2) |
                 else putStr "G"
             else putStr "-"
 
-\end{code}
+\end{code}%this code is hidden to the Haskell compiler
 
 \ignore{
 % we want LaTeX to ignore this since evil QuickCheck TemplateHaskell hackery
