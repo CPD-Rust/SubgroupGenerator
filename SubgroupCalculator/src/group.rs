@@ -161,17 +161,17 @@ pub fn all_subgroups(size : usize) -> BTreeSet<Subgroup> {
     let mut result = Arc::new(Mutex::new(BTreeSet::new()));
     // Use the channel to notify the main thread when we're done.
     let (tx, rx) = mpsc::channel();
-    let mut channels = Vec<mspc::Sender>::new();
+    let mut channels = Vec::new();
 
     let threadCount = 8;
     for i in 0 .. threadCount {
-        let tx, rx = mspc::channel();
+        let (tx, rx) = mspc::channel();
         channels.append(tx);
 
         let resultCell = result.clone();
         thread::spawn(move || {
             // As long as there is work to do, do work.
-            for elem1, elem2, elem3 in rx {
+            for (elem1, elem2, elem3) in rx {
                 // TODO: dit kan beter.
                 let generators = make_subset([elem1, elem2, elem3].iter()
                     .cloned().collect()).unwrap();
