@@ -80,6 +80,13 @@ infeasible. We opted to redesign the generate function entirely. Simply put, we 
 where we take our elements from and where we add our elements to. Then we used the property that when these
 two are BTreesSets are equal, we are done.
 
+\section{Making it parallel}
+
+We started to make the program parallel by making a single new thread to perform the calculation, and making the main thread wait for the result. As explained in the Rust documentation, we placed the Set being calculated in an atomic reference counted mutex, which will allow multiple threads mutable access to the set. When a thread has calculated a subgroup, it will lock the mutex and insert the group into the set. When all threads have finished, the main thread will unlock the mutex and return the set.
+
+In our first attempt, we locked the mutex in the main thread and returned a clone of the resulting reference. However, this resulted in an error that the atomic reference counter was still borrowed when it went out of scope. This was caused by the reference still existing when the end of the function was reached. Instead, we had to separately declare the reference to the set and clone it as a return value. This allows the reference to be dropped from scope when the clone has been made (and moved to the calling scope).
+% Zie commit 6117b984219ee09892561b87c7bf08fe660fc1b1
+% Zie commit 5111c8b2bfd4d2790bbe5def1dd36dd1740a9575
 
 \end{document}
 
