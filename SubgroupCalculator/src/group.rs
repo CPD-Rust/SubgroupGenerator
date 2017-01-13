@@ -161,7 +161,7 @@ pub fn all_subgroups(size : usize) -> BTreeSet<Subgroup> {
     let mut result = Arc::new(Mutex::new(BTreeSet::new()));
     // Use the channel to notify the main thread when we're done.
     let (tx, rx) = mpsc::channel();
-    let mut channels = Vec::new();
+    let mut channels : Vec<mpsc::Sender> = Vec::new();
 
     let threadCount = 8;
     for i in 0 .. threadCount {
