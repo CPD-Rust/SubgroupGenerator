@@ -163,7 +163,7 @@ pub fn all_subgroups(size : usize) -> BTreeSet<Subgroup> {
     let (tx, rx) = mpsc::channel();
     let mut channels : Vec<mpsc::Sender<(permutation::Permutation, permutation::Permutation, permutation::Permutation)>> = Vec::new();
 
-    let threadCount = 8;
+    let threadCount = 16;
     for i in 0 .. threadCount {
         let threadTx = tx.clone();
         let (tx, rx) = mpsc::channel();
@@ -171,15 +171,17 @@ pub fn all_subgroups(size : usize) -> BTreeSet<Subgroup> {
 
         let resultCell = result.clone();
         thread::spawn(move || {
+            let mut localResult = BTreeSet::new();
             // As long as there is work to do, do work.
             for (elem1, elem2, elem3) in rx {
                 // TODO: dit kan beter.
                 let generators = make_subset([elem1, elem2, elem3].iter()
                     .cloned().collect()).unwrap();
 
-                let mut resultRef = resultCell.lock().unwrap();
-                resultRef.insert(generate_fixpoint(&generators));
+                localResult.insert(generate_fixpoint(&generators));
             }
+            let mut resultRef = resultCell.lock().unwrap();
+            resultRef.append(localResult);
             // Notify that we're finished.
             threadTx.send(()).unwrap();
         });
