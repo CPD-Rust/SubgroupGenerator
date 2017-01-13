@@ -165,7 +165,8 @@ pub fn all_subgroups(size : usize) -> BTreeSet<Subgroup> {
 
     let threadCount = 8;
     for i in 0 .. threadCount {
-        let (tx, rx) = mspc::channel();
+        let threadTx = tx.clone();
+        let (tx, rx) = mpsc::channel();
         channels.append(tx);
 
         let resultCell = result.clone();
@@ -180,7 +181,7 @@ pub fn all_subgroups(size : usize) -> BTreeSet<Subgroup> {
                 resultRef.insert(generate_fixpoint(&generators));
             }
             // Notify that we're finished.
-            tx.send(()).unwrap();
+            threadTx.send(()).unwrap();
         });
     }
 
@@ -189,7 +190,7 @@ pub fn all_subgroups(size : usize) -> BTreeSet<Subgroup> {
         for elem2 in &elems {
             for elem3 in &elems {
                 channels[elemCount % threadCount].send((elem1, elem2, elem3)).unwrap();
-                elemCount++;
+                elemCount += 1;
             }
         }
     }
