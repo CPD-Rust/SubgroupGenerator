@@ -160,11 +160,12 @@ pub fn all_subgroups(size : usize) -> BTreeSet<Subgroup> {
     // We'll write our results into this set
     let mut result = Arc::new(Mutex::new(BTreeSet::new()));
     let mut threadCount = 0;
+    // Use the channel to notify the main thread when we're done.
+    let (tx, rx) = mpsc::channel();
     for elem1 in &elems {
         let resultCell = result.clone();
+        let tx = tx.clone();
 
-        // Use the channel to notify the main thread when we're done.
-        let (tx, rx) = mpsc::channel();
         thread::spawn(move || {
             for elem2 in &elems {
                 for elem3 in &elems {
@@ -179,10 +180,10 @@ pub fn all_subgroups(size : usize) -> BTreeSet<Subgroup> {
             // Notify that we're finished.
             tx.send(()).unwrap();
         });
-        threadCount++;
+        threadCount += 1;
     }
 
-    for _ in 0..thread_count {
+    for _ in 0..threadCount {
         // Wait for threads to finish.
         rx.recv().unwrap();
     }
