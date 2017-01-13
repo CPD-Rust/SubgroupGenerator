@@ -183,5 +183,5 @@ pub fn all_subgroups(size : usize) -> BTreeSet<Subgroup> {
     // Wait for threads to finish.
     rx.recv().unwrap();
 
-    result.into_inner().unwrap()
+    result.into_inner().unwrap().clone()
 }
