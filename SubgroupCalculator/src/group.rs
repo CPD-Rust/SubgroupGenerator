@@ -1,6 +1,9 @@
 use permutation;
 use std::collections::BTreeSet;
 use std::collections::VecDeque;
+use std::sync::{Arc, Mutex};
+use std::thread;
+use std::sync::mpsc;
 
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Subset {
