@@ -181,7 +181,7 @@ pub fn all_subgroups(size : usize) -> BTreeSet<Subgroup> {
                 localResult.insert(generate_fixpoint(&generators));
             }
             let mut resultRef = resultCell.lock().unwrap();
-            resultRef.append(localResult);
+            resultRef.append(&mut localResult);
             // Notify that we're finished.
             threadTx.send(()).unwrap();
         });
