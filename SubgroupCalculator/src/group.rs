@@ -159,32 +159,43 @@ pub fn all_subgroups(size : usize) -> BTreeSet<Subgroup> {
 
     // We'll write our results into this set
     let mut result = Arc::new(Mutex::new(BTreeSet::new()));
-    let mut threadCount = 0;
     // Use the channel to notify the main thread when we're done.
     let (tx, rx) = mpsc::channel();
-    for elem1 in &elems {
+    let mut channels = Vec<mspc::Sender>::new();
+
+    let threadCount = 8;
+    for i in 0 .. threadCount {
+        let tx, rx = mspc::channel();
+        channels.append(tx);
+
         let resultCell = result.clone();
-        let elem1 = elem1.clone();
-        let elems = elems.clone();
-        let tx = tx.clone();
-
         thread::spawn(move || {
-            for elem2 in &elems {
-                for elem3 in &elems {
-                    // TODO: dit kan beter.
-                    let generators = make_subset([elem1.clone(), elem2.clone(),
-                        elem3.clone()].iter() .cloned().collect()).unwrap();
+            // As long as there is work to do, do work.
+            for elem1, elem2, elem3 in rx {
+                // TODO: dit kan beter.
+                let generators = make_subset([elem1, elem2, elem3].iter()
+                    .cloned().collect()).unwrap();
 
-                    let mut resultRef = resultCell.lock().unwrap();
-                    resultRef.insert(generate_fixpoint(&generators));
-                }
+                let mut resultRef = resultCell.lock().unwrap();
+                resultRef.insert(generate_fixpoint(&generators));
             }
             // Notify that we're finished.
             tx.send(()).unwrap();
         });
-        threadCount += 1;
     }
 
+    let mut elemCount = 0;
+    for elem1 in &elems {
+        for elem2 in &elems {
+            for elem3 in &elems {
+                channels[elemCount % threadCount].send((elem1, elem2, elem3)).unwrap();
+                elemCount++;
+            }
+        }
+    }
+
+    // tell the threads that this is everything
+    drop(channels);
     for _ in 0..threadCount {
         // Wait for threads to finish.
         rx.recv().unwrap();
