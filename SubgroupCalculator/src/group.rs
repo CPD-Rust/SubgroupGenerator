@@ -171,8 +171,8 @@ pub fn all_subgroups(size : usize) -> BTreeSet<Subgroup> {
                     let generators = make_subset([elem1.clone(), elem2.clone(),
                         elem3.clone()].iter() .cloned().collect()).unwrap();
 
-                    let mut result = resultCell.lock().unwrap();
-                    result.insert(generate_fixpoint(&generators));
+                    let mut resultRef = resultCell.lock().unwrap();
+                    resultRef.insert(generate_fixpoint(&generators));
                 }
             }
         }
@@ -183,5 +183,6 @@ pub fn all_subgroups(size : usize) -> BTreeSet<Subgroup> {
     // Wait for threads to finish.
     rx.recv().unwrap();
 
-    result.into_inner().unwrap().clone()
+    let mut resultRef = result.lock().unwrap();
+    resultRef.clone()
 }
