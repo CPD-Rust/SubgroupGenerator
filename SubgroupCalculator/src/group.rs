@@ -189,7 +189,7 @@ pub fn all_subgroups(size : usize) -> BTreeSet<Subgroup> {
     for elem1 in &elems {
         for elem2 in &elems {
             for elem3 in &elems {
-                channels[elemCount % threadCount].send((elem1, elem2, elem3)).unwrap();
+                channels[elemCount % threadCount].send((elem1.clone(), elem2.clone(), elem3.clone())).unwrap();
                 elemCount += 1;
             }
         }
