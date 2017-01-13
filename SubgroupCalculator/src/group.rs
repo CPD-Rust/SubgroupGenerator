@@ -158,7 +158,7 @@ pub fn all_subgroups(size : usize) -> BTreeSet<Subgroup> {
     let elems = elem_set.elements;
 
     // We'll write our results into this set
-    let mut result = Arc::new(Mutext::new(BTreeSet::new()));
+    let mut result = Arc::new(Mutex::new(BTreeSet::new()));
     let resultCell = result.clone();
 
     // Use the channel to notify the main thread when we're done.
