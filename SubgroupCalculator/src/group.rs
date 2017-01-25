@@ -4,6 +4,7 @@ use std::collections::VecDeque;
 use std::sync::{Arc, Mutex};
 use std::thread;
 use std::sync::mpsc;
+use std::fmt;
 
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Subset {
@@ -15,6 +16,21 @@ pub struct Subset {
 
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Subgroup(Subset);
+
+impl fmt::Display for Subgroup {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    let Subgroup(ref subset) = *self;
+        let mut display_vector = Vec::new();
+        let elem_set = &subset.elements;
+        for elem in elem_set {
+            display_vector.push(format!("{}",elem));
+        }
+        let display_result = display_vector.join(",");
+        write!(f, "{}", display_result)
+        //write!(f, "{:?}", elem_set.elements)
+    }
+}
+
 #[derive(Debug)]
 pub struct ConjugacyClass(Subset);
 
